@@ -105,7 +105,7 @@ namespace UnityEngine.Rendering.PostProcessing
         Dithering dithering;
 
         /// <summary>
-        /// The debug layer is reponsible for rendering debugging information on the screen. It will
+        /// The debug layer is responsible for rendering debugging information on the screen. It will
         /// only be used if this layer is referenced in a <see cref="PostProcessDebug"/> component.
         /// </summary>
         /// <seealso cref="PostProcessDebug"/>
@@ -114,11 +114,10 @@ namespace UnityEngine.Rendering.PostProcessing
         [SerializeField]
         PostProcessResources m_Resources;
 
-#pragma warning disable 169
+        // warnings 169 now suppressed globally
         // UI states
         [SerializeField] bool m_ShowToolkit;
         [SerializeField] bool m_ShowCustomSorter;
-#pragma warning restore 169
 
         /// <summary>
         /// If <c>true</c>, it will stop applying post-processing effects just before color grading
