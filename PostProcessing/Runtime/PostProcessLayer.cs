@@ -744,8 +744,17 @@ namespace UnityEngine.Rendering.PostProcessing
 
             foreach (var item in list)
             {
-                if (item.bundle.settings.IsEnabledAndSupported(context))
+                bool enabledAndSupported = item.bundle.settings.IsEnabledAndSupported(context);
+
+                if (context.isSceneView)
+                {
+                    if (item.bundle.attribute.allowInSceneView && enabledAndSupported)
+                        return true;
+                }
+                else if (enabledAndSupported)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -845,7 +854,7 @@ namespace UnityEngine.Rendering.PostProcessing
             int lastTarget = -1;
             RenderTargetIdentifier cameraTexture = context.source;
 
-#if UNITY_2019_1_OR_NEWER && XR_POSTPROCESSING_INTERFACE
+#if UNITY_2019_1_OR_NEWER
             if (context.stereoActive && context.numberOfEyes > 1 && context.stereoRenderingMode == PostProcessRenderContext.StereoRenderingMode.SinglePass)
             {
                 cmd.SetSinglePassStereo(SinglePassStereoMode.None);
@@ -956,7 +965,7 @@ namespace UnityEngine.Rendering.PostProcessing
                     context.source = cameraTexture;
             }
 
-#if UNITY_2019_1_OR_NEWER && XR_POSTPROCESSING_INTERFACE
+#if UNITY_2019_1_OR_NEWER
             if (context.stereoActive && context.numberOfEyes > 1 && context.stereoRenderingMode == PostProcessRenderContext.StereoRenderingMode.SinglePass)
             {
                 cmd.SetSinglePassStereo(SinglePassStereoMode.SideBySide);
